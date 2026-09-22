@@ -1,0 +1,550 @@
+```html
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個人介紹 | 戴嘉閒</title>
+
+    <style>
+
+        /* =========================
+           全局設定
+        ========================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            min-height: 100vh;
+        }
+
+
+        /* =========================
+           導覽列
+        ========================= */
+
+        nav {
+            background-color: #2c3e50;
+            padding: 15px 20px;
+            text-align: center;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            border: none;
+            color: white;
+            background-color: #34495e;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background-color: #1976d2;
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.active {
+            background-color: #1976d2;
+        }
+
+
+        /* =========================
+           內容區塊
+           Flexbox 橫向排列
+        ========================= */
+
+        .page {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+
+            display: flex;
+
+            /* 電腦版：橫向排列 */
+            flex-direction: row;
+
+            /* 水平置中 */
+            justify-content: center;
+
+            /* 卡片之間 16px */
+            gap: 16px;
+        }
+
+
+        /* =========================
+           卡片
+        ========================= */
+
+        .content-card {
+            background-color: white;
+            border-radius: 16px;
+
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+
+            padding: 30px;
+
+            /* 平均分配寬度 */
+            flex: 1;
+
+            max-width: 330px;
+
+            min-height: 260px;
+
+            text-align: center;
+
+            transition: transform 0.3s ease,
+                        box-shadow 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .content-card h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .content-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+
+        /* =========================
+           個人照片
+        ========================= */
+
+        .avatar-container {
+            width: 120px;
+            height: 120px;
+
+            margin: 0 auto 20px;
+
+            border-radius: 50%;
+            overflow: hidden;
+
+            border: 4px solid #eef2f5;
+
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .avatar-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+
+        /* =========================
+           個人姓名
+        ========================= */
+
+        .name {
+            font-size: 1.6rem;
+            color: #2c3e50;
+            margin-bottom: 12px;
+        }
+
+
+        /* =========================
+           個人標籤
+        ========================= */
+
+        .tag-container {
+            display: flex;
+
+            justify-content: center;
+
+            gap: 6px;
+
+            margin-bottom: 20px;
+
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background-color: #e3f2fd;
+
+            color: #1976d2;
+
+            padding: 5px 10px;
+
+            border-radius: 20px;
+
+            font-size: 0.8rem;
+        }
+
+
+        /* =========================
+           自我介紹
+        ========================= */
+
+        .bio {
+            background-color: #fafafa;
+
+            border-left: 4px solid #1976d2;
+
+            border-radius: 8px;
+
+            padding: 15px;
+
+            line-height: 1.7;
+
+            color: #555;
+
+            text-align: left;
+        }
+
+
+        /* =========================
+           聯絡資訊
+        ========================= */
+
+        .contact-item {
+            background-color: #fafafa;
+
+            padding: 12px;
+
+            border-radius: 8px;
+
+            margin-bottom: 12px;
+
+            font-size: 0.9rem;
+        }
+
+        .contact-item a {
+            color: #1976d2;
+            text-decoration: none;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =========================
+           頁尾
+        ========================= */
+
+        footer {
+            text-align: center;
+
+            color: #888;
+
+            font-size: 0.8rem;
+
+            padding: 25px;
+        }
+
+
+        /* =========================
+           Media Query
+           螢幕小於 768px
+        ========================= */
+
+        @media (max-width: 767px) {
+
+            .page {
+
+                /* 改成直向排列 */
+                flex-direction: column;
+
+                /* 垂直方向置中 */
+                align-items: center;
+
+                /* 卡片之間維持 16px */
+                gap: 16px;
+            }
+
+            .content-card {
+
+                /* 手機版卡片寬度 */
+                width: 100%;
+
+                max-width: 500px;
+            }
+
+        }
+
+
+        /* =========================
+           更小的手機螢幕
+        ========================= */
+
+        @media (max-width: 480px) {
+
+            nav {
+                padding: 12px;
+            }
+
+            .nav-buttons {
+                gap: 8px;
+            }
+
+            .nav-btn {
+                padding: 8px 15px;
+                font-size: 0.85rem;
+            }
+
+            .page {
+                margin: 25px auto;
+                padding: 0 15px;
+            }
+
+            .content-card {
+                padding: 25px 20px;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         導覽列
+    ========================= -->
+
+    <nav>
+
+        <div class="nav-buttons">
+
+            <button
+                class="nav-btn active"
+                onclick="showPage('home', this)">
+                🏠 首頁
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="showPage('about', this)">
+                👤 個人介紹
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="showPage('contact', this)">
+                📧 聯絡我
+            </button>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =========================
+         內容區
+    ========================= -->
+
+    <main class="page">
+
+
+        <!-- 首頁 -->
+
+        <div id="home" class="content-card">
+
+            <h2>🏠 首頁</h2>
+
+            <p>
+                你好，我是戴嘉閒！<br><br>
+
+                歡迎來到我的個人網站。<br>
+
+                你可以透過上方的導覽按鈕，
+                查看我的個人介紹以及聯絡方式。
+            </p>
+
+        </div>
+
+
+        <!-- 個人介紹 -->
+
+        <div id="about" class="content-card">
+
+            <div class="avatar-container">
+
+                <img
+                    src="https://via.placeholder.com/150"
+                    alt="戴嘉閒的大頭貼"
+                >
+
+            </div>
+
+            <h2 class="name">
+                戴嘉閒
+            </h2>
+
+
+            <div class="tag-container">
+
+                <span class="tag">
+                    🎓 國立勤益科技大學
+                </span>
+
+                <span class="tag">
+                    資訊管理系
+                </span>
+
+                <span class="tag">
+                    大二生
+                </span>
+
+            </div>
+
+
+            <div class="bio">
+
+                <p>
+                    你好！我是戴嘉閒，目前就讀
+                    國立勤益科技大學資訊管理系二年級。
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- 聯絡我 -->
+
+        <div id="contact" class="content-card">
+
+            <h2>📧 聯絡我</h2>
+
+            <div class="contact-item">
+
+                📩 Email：
+
+                <a href="mailto:your-email@gmail.com">
+                    your-email@gmail.com
+                </a>
+
+            </div>
+
+
+            <div class="contact-item">
+
+                💻 GitHub：
+
+                <a href="#" target="_blank">
+                    我的 GitHub
+                </a>
+
+            </div>
+
+
+            <div class="contact-item">
+
+                📷 Instagram：
+
+                <a href="#" target="_blank">
+                    我的 Instagram
+                </a>
+
+            </div>
+
+        </div>
+
+
+    </main>
+
+
+    <!-- =========================
+         頁尾
+    ========================= -->
+
+    <footer>
+
+        <p>
+            &copy; 2026 戴嘉閒. All Rights Reserved.
+        </p>
+
+    </footer>
+
+
+    <!-- =========================
+         JavaScript
+    ========================= -->
+
+    <script>
+
+        function showPage(pageId, button) {
+
+            // 取得所有卡片
+            const cards =
+                document.querySelectorAll(".content-card");
+
+
+            // 隱藏所有卡片
+            cards.forEach(function(card) {
+
+                card.style.display = "none";
+
+            });
+
+
+            // 顯示指定卡片
+            document.getElementById(pageId)
+                    .style.display = "block";
+
+
+            // 取得所有按鈕
+            const buttons =
+                document.querySelectorAll(".nav-btn");
+
+
+            // 移除 active
+            buttons.forEach(function(btn) {
+
+                btn.classList.remove("active");
+
+            });
+
+
+            // 設定目前按鈕為 active
+            button.classList.add("active");
+
+        }
+
+
+        // 網頁開啟時只顯示首頁
+        window.onload = function() {
+
+            document.getElementById("about")
+                    .style.display = "none";
+
+            document.getElementById("contact")
+                    .style.display = "none";
+
+            document.getElementById("home")
+                    .style.display = "block";
+
+        };
+
+    </script>
+
+
+</body>
+</html>
+```
